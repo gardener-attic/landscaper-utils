@@ -31,3 +31,7 @@ test:
 
 .PHONY: verify
 verify: check test
+
+.PHONY: install-cli
+install-cli:
+	@EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) ./hack/install-cli.sh
