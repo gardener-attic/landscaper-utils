@@ -68,7 +68,7 @@ type OsImage struct {
 	Version MachineImageVersion `json:"version,omitempty"`
 }
 
-func computeMachineImages(
+func ComputeMachineImages(
 	lssOsImages []MachineImage,
 	landscapeOsImages []MachineImage,
 	providerOsImages []MachineImage,

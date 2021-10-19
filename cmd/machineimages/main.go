@@ -9,16 +9,16 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gardener/landscaper-utils/cmd/landscaper-utils/app"
+	"github.com/gardener/landscaper-utils/cmd/machineimages/app"
 )
 
 func main() {
 	ctx := context.Background()
 	defer ctx.Done()
 
-	landscaperUtilsCmd := app.NewLandscaperUtilsCommand(ctx)
+	cmd := app.NewComputeMachineImagesCommand(ctx)
 
-	if err := landscaperUtilsCmd.Execute(); err != nil {
+	if err := cmd.Execute(); err != nil {
 		fmt.Print(err)
 		os.Exit(1)
 	}

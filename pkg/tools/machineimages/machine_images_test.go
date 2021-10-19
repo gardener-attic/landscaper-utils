@@ -93,7 +93,7 @@ var _ = Describe("machine images", func() {
 			includeFileters := []OsImagesFilterKind{}
 			excludeFilters := []OsImagesFilterKind{}
 
-			machineImages, err := computeMachineImages(
+			machineImages, err := ComputeMachineImages(
 				lssOsImages,
 				landscapeOsImages,
 				providerOsImages,
