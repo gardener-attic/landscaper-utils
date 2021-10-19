@@ -19,15 +19,15 @@ revendor:
 
 .PHONY: format
 format:
-	@goimports -l -w -local=github.com/gardener/image-vector ./pkg
+	@goimports -l -w -local=github.com/gardener/image-vector ./pkg ./cmd
 
 .PHONY: check
 check:
-	@$(REPO_ROOT)/hack/check.sh --golangci-lint-config=./.golangci.yaml $(REPO_ROOT)/pkg/...
+	@$(REPO_ROOT)/hack/check.sh --golangci-lint-config=./.golangci.yaml $(REPO_ROOT)/pkg/... $(REPO_ROOT)/cmd/...
 
 .PHONY: test
 test:
-	@go test ./pkg/...
+	@go test ./pkg/... ./cmd/...
 
 .PHONY: verify
 verify: check test
