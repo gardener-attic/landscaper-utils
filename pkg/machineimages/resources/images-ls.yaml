@@ -1,0 +1,9 @@
+- name: flatcar
+  versions:
+    - version: 2765.2.6
+      classification:  supported
+      cri:
+        - name: containerd
+          containerRuntimes:
+            - type: gvisor
+        - name: docker

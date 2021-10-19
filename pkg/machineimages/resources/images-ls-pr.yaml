@@ -1,0 +1,40 @@
+- name: flatcar
+  versions:
+    - version: 2765.2.6
+      regions:
+        - name: ap-east-1
+          ami: ami-0df249fad4e423ae7
+        - name: ap-northeast-1
+          ami: ami-028697e8df1ff071b
+        - name: ap-northeast-2
+          ami: ami-0c5b8f2d07d21da16
+        - name: ap-south-1
+          ami: ami-055b64c22dbcd61b0
+        - name: ap-southeast-1
+          ami: ami-045357ea038a43fe7
+        - name: ap-southeast-2
+          ami: ami-05df81d055054698d
+        - name: ca-central-1
+          ami: ami-0f639872bfcb49738
+        - name: eu-central-1
+          ami: ami-055acc5a6e9587b44
+        - name: eu-north-1
+          ami: ami-04f64f11f4dacda92
+        - name: eu-west-1
+          ami: ami-019f09de46e4e3f88
+        - name: eu-west-2
+          ami: ami-0097d8b6241e9cf76
+        - name: eu-west-3
+          ami: ami-05b8b0131fbb39283
+        - name: me-south-1
+          ami: ami-0737c661a0881fd94
+        - name: sa-east-1
+          ami: ami-00bc3ae33287bc81b
+        - name: us-east-1
+          ami: ami-0fd66875fa1ef8395
+        - name: us-east-2
+          ami: ami-02eb704ee029f6b9e
+        - name: us-west-1
+          ami: ami-053fb35697f85574d
+        - name: us-west-2
+          ami: ami-019657181ea76e880

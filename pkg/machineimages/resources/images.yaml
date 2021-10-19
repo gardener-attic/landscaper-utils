@@ -1,0 +1,110 @@
+- name: gardenlinux
+  versions:
+    - classification: preview
+      cri:
+        - name: docker
+        - containerRuntimes:
+            - type: gvisor
+          name: containerd
+      version: 318.9.0
+    - classification: supported
+      cri:
+        - name: docker
+        - containerRuntimes:
+            - type: gvisor
+          name: containerd
+      version: 318.8.0
+    - classification: deprecated
+      cri:
+        - name: docker
+        - containerRuntimes:
+            - type: gvisor
+          name: containerd
+      expirationDate: '2022-01-15T23:59:59Z'
+      version: 184.0.0
+- name: suse-chost
+  versions:
+    - classification: supported
+      cri:
+        - name: docker
+      version: 15.2.20210913
+    - cri:
+        - name: docker
+      version: 15.2.20210913-gen2
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2022-01-31T23:59:59Z'
+      version: 15.2.20210722
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2022-01-31T23:59:59Z'
+      version: 15.2.20210722-gen2
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2022-01-15T23:59:59Z'
+      version: 15.2.20210610
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2022-01-15T23:59:59Z'
+      version: 15.2.20210610-gen2
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2021-11-15T23:59:59Z'
+      version: 15.2.20210405
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2021-11-15T23:59:59Z'
+      version: 15.2.20210405-gen2
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2021-09-30T23:59:59Z'
+      version: 15.2.20210202
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2021-09-30T23:59:59Z'
+      version: 15.2.20210202-gen2
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2021-11-15T23:59:59Z'
+      version: 15.1.20210304
+    - classification: deprecated
+      cri:
+        - name: docker
+      expirationDate: '2021-11-15T23:59:59Z'
+      version: 15.1.20210304-gen2
+- name: ubuntu
+  versions:
+    - classification: supported
+      cri:
+        - name: docker
+        - containerRuntimes:
+            - type: gvisor
+          name: containerd
+      version: 18.4.20210415
+    - classification: deprecated
+      cri:
+        - name: docker
+        - containerRuntimes:
+            - type: gvisor
+          name: containerd
+      expirationDate: '2021-11-30T23:59:59Z'
+      version: 18.4.20200228
+- name: memoryone-chost
+  versions:
+    - classification: preview
+      cri:
+        - name: docker
+      version: 10.5.2450-4
+    - classification: supported
+      cri:
+        - name: docker
+      version: 10.5.2400-5
