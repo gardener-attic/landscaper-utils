@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"errors"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -41,6 +42,18 @@ func (o *options) complete() error {
 
 	if len(o.ExportsPath) == 0 {
 		o.ExportsPath = os.Getenv(EnvVarExportsPath)
+	}
+
+	return o.validate()
+}
+
+func (o *options) validate() error {
+	if len(o.ImportsPath) == 0 {
+		return errors.New("an imports path must be provided. ")
+	}
+
+	if len(o.ExportsPath) == 0 {
+		return errors.New("an exports path must be provided. ")
 	}
 
 	return nil
