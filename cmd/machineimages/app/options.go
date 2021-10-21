@@ -70,9 +70,9 @@ func (o *options) run(ctx context.Context) error {
 		imports.MachineImagesLs,
 		imports.MachineImagesProvider,
 		imports.MachineImagesProviderLs,
-		nil,
-		nil,
-		nil,
+		imports.DisableMachineImages,
+		imports.IncludeFilters,
+		imports.ExcludeFilters,
 	)
 	if err != nil {
 		return err

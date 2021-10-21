@@ -18,6 +18,24 @@ imports:
     type: data
     schema:
       $ref: "cd://resources/machine-images-schema"
+  - name: includeFilters
+    type: data
+    scheme:
+      type: array
+      items:
+        type: string
+  - name: excludeFilters
+    type: data
+    scheme:
+      type: array
+      items:
+        type: string
+  - name: disableMachineImages
+    type: data
+    scheme:
+      type: array
+      items:
+        type: string
 
 exports:
   - name: machineImages
