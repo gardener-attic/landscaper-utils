@@ -1,0 +1,18 @@
+---
+type: blueprint
+name: blueprint
+relation: local
+input: 
+  type: dir
+  path: ./blueprint
+  mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+  compress: true
+...
+---
+name: machine-images-schema
+type: landscaper.gardener.cloud/jsonschema
+relation: local
+input:
+  type: file
+  path: ./schemata/machine-images.yaml
+...

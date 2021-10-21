@@ -1,0 +1,38 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+
+imports:
+  - name: machineImages
+    type: data
+    schema:
+      $ref: "cd://resources/machine-images-schema"
+  - name: machineImagesLs
+    type: data
+    schema:
+      $ref: "cd://resources/machine-images-schema"
+  - name: machineImagesProvider
+    type: data
+    schema:
+      $ref: "cd://resources/machine-images-schema"
+  - name: machineImagesProviderLs
+    type: data
+    schema:
+      $ref: "cd://resources/machine-images-schema"
+
+exports:
+  - name: machineImages
+    type: data
+    schema:
+      $ref: "cd://resources/machine-images-schema"
+
+exportExecutions:
+  - name: export-execution
+    file: /export-execution.yaml
+    type: GoTemplate
+
+subinstallations: []
+
+deployExecutions:
+  - file: /deploy-execution.yaml
+    name: machine-image-deploy-execution
+    type: GoTemplate
