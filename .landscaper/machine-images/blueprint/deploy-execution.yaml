@@ -7,7 +7,7 @@ deployItems:
   config:
     apiVersion: container.deployer.landscaper.gardener.cloud/v1alpha1
     kind: ProviderConfiguration
-    {{- $image := getResource .cd "name" "machine-image-computation" }}
+    {{- $image := getResource .cd "name" "machine-images" }}
     image: {{ $image.access.imageReference }}
     args: []
     command: []
