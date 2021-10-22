@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gardener/landscaper-utils/cmd/machineimages/app"
+	"github.com/gardener/landscaper-utils/cmd/machine-images/app"
 )
 
 func main() {

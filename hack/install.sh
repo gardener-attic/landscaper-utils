@@ -9,4 +9,12 @@ set -e
 CURRENT_DIR=$(dirname $0)
 PROJECT_ROOT="${CURRENT_DIR}"/..
 
-go install ${PROJECT_ROOT}/cmd/landscaper-utils
+if [[ $EFFECTIVE_VERSION == "" ]]; then
+  EFFECTIVE_VERSION=$(cat $PROJECT_ROOT/VERSION)
+fi
+
+echo "> Install $EFFECTIVE_VERSION"
+
+CGO_ENABLED=0 GOOS=$(go env GOOS) GOARCH=$(go env GOARCH) GO111MODULE=on \
+  go install -mod=vendor \
+  ${PROJECT_ROOT}/cmd/...
