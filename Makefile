@@ -59,7 +59,3 @@ cnudie: export COMPONENT_NAME=$(COMP_NAME_MACHINE_IMAGES)
 cnudie:
 	@EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) ./hack/generate-cd.sh
 
-tester: export COMPONENT_NAME=$(COMP_NAME_MACHINE_IMAGES)
-.PHONY: tester
-tester:
-	@echo "Building docker images for version $(COMPONENT_NAME) "
