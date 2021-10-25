@@ -13,7 +13,7 @@ spec:
       repositoryContext:
         baseUrl: eu.gcr.io/gardener-project/landscaper-utils
         type: ociRegistry
-      version: v0.0.0-dev-5cf6f5a86f968baeb3223f01a51f41f05aab3e51
+      version: v0.0.0-dev-f5a7e969357f8b00a96acef51d44f6f27609a957
 
   imports:
     data:
