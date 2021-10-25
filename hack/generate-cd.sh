@@ -48,7 +48,7 @@ echo "> Extending resources.yaml: adding image of ${COMPONENT_NAME}"
 RESOURCES_BASE_PATH="$(mktemp -d)"
 cp -R ".landscaper/${COMPONENT_NAME}" "${RESOURCES_BASE_PATH}"
 
-RESOURCES_FILE_PATH="${RESOURCES_BASE_PATH}/resources.yaml"
+RESOURCES_FILE_PATH="${RESOURCES_BASE_PATH}/${COMPONENT_NAME}/resources.yaml"
 cat << EOF >> ${RESOURCES_FILE_PATH}
 ---
 type: ociImage
