@@ -14,6 +14,6 @@ type: landscaper.gardener.cloud/jsonschema
 relation: local
 input:
   type: file
-  path: ./schemata/machine-images.yaml
+  path: ./schemata/machine-images.json
   mediaType: application/vnd.gardener.landscaper.jsonschema.layer.v1.json
 ...
