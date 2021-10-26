@@ -13,37 +13,37 @@ spec:
       repositoryContext:
         baseUrl: eu.gcr.io/gardener-project/landscaper-utils
         type: ociRegistry
-      version: v0.0.0-dev-f5a7e969357f8b00a96acef51d44f6f27609a957
+      version: v0.0.0-dev-e61602fde8ad4bf5d6ae0735b5742a590da6b8a8
 
   imports:
     data:
       - name: machineImages
         configMapRef:
-          name: machine-images-imports
+          name: "machine-images-imports"
           key: machineImages
       - name: machineImagesLs
         configMapRef:
-          name: machine-images-imports
+          name: "machine-images-imports"
           key: machineImagesLs
       - name: machineImagesProvider
         configMapRef:
-          name: machine-images-imports
+          name: "machine-images-imports"
           key: machineImagesProvider
       - name: machineImagesProviderLs
         configMapRef:
-          name: machine-images-imports
+          name: "machine-images-imports"
           key: machineImagesProviderLs
       - name: includeFilters
         configMapRef:
-          name: machine-images-imports
+          name: "machine-images-imports"
           key: includeFilters
       - name: excludeFilters
         configMapRef:
-          name: machine-images-imports
+          name: "machine-images-imports"
           key: excludeFilters
       - name: disableMachineImages
         configMapRef:
-          name: machine-images-imports
+          name: "machine-images-imports"
           key: disableMachineImages
 
   exports:
