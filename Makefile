@@ -59,3 +59,9 @@ cnudie: export COMPONENT_NAME=$(COMP_NAME_MACHINE_IMAGES)
 cnudie:
 	@EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) ./hack/generate-cd.sh
 
+.PHONY: create-installation
+create-installation:
+	@REGISTRY=$(REGISTRY) \
+	COMPONENT_NAME=$(COMP_NAME_MACHINE_IMAGES) \
+	EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) \
+	./hack/create-installation.sh
