@@ -20,19 +20,19 @@ imports:
       $ref: "cd://resources/machine-images-schema"
   - name: includeFilters
     type: data
-    scheme:
+    schema:
       type: array
       items:
         type: string
   - name: excludeFilters
     type: data
-    scheme:
+    schema:
       type: array
       items:
         type: string
   - name: disableMachineImages
     type: data
-    scheme:
+    schema:
       type: array
       items:
         type: string
