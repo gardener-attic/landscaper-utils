@@ -1,3 +1,3 @@
 exports:
   machineImages: |
-    {{- index .values "deployitems" "default" "machineImages" | nindent 4 }}
+    {{- index .values "deployitems" "machine-image-computation" "machineImages" | nindent 4 }}
