@@ -17,7 +17,7 @@
 set -e
 
 SOURCE_PATH="$(dirname $0)/.."
-REPO_CTX="eu.gcr.io/gardener-project/landscaper-utils"
+REPO_CTX="eu.gcr.io/sap-se-gcr-k8s-private/cnudie/gardener/development"
 CA_PATH="$(mktemp -d)"
 BASE_DEFINITION_PATH="${CA_PATH}/component-descriptor.yaml"
 
