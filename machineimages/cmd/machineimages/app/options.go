@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2021 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package app
 
 import (
@@ -7,8 +11,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/gardener/landscaper-utils/pkg/tools/machineimages"
+	"github.com/gardener/landscaper-utils/machineimages/pkg/logger"
+
 	"sigs.k8s.io/yaml"
+
+	mi "github.com/gardener/landscaper-utils/machineimages/pkg/machineimages"
 
 	"github.com/spf13/pflag"
 )
@@ -65,7 +72,9 @@ func (o *options) run(ctx context.Context) error {
 		return err
 	}
 
-	result, err := machineimages.ComputeMachineImages(
+	result, err := mi.ComputeMachineImages(
+		context.Background(),
+		logger.Log,
 		imports.MachineImages,
 		imports.MachineImagesLs,
 		imports.MachineImagesProvider,
@@ -78,17 +87,19 @@ func (o *options) run(ctx context.Context) error {
 		return err
 	}
 
-	err = o.writeExports(&machineimages.Exports{ResultMachineImages: result})
+	err = o.writeExports(&mi.Exports{ResultMachineImages: result})
 	return err
 }
 
-func (o *options) readImports() (*machineimages.Imports, error) {
+func (o *options) readImports() (*mi.Imports, error) {
+	logger.Log.Info("Reading imports", "imports-path", o.ImportsPath)
+
 	data, err := ioutil.ReadFile(o.ImportsPath)
 	if err != nil {
 		return nil, err
 	}
 
-	imports := &machineimages.Imports{}
+	imports := &mi.Imports{}
 	if err := yaml.Unmarshal(data, imports); err != nil {
 		return nil, err
 	}
@@ -96,7 +107,9 @@ func (o *options) readImports() (*machineimages.Imports, error) {
 	return imports, nil
 }
 
-func (o *options) writeExports(exports *machineimages.Exports) error {
+func (o *options) writeExports(exports *mi.Exports) error {
+	logger.Log.Info("Writing imports", "exports-path", o.ExportsPath)
+
 	b, err := yaml.Marshal(exports)
 	if err != nil {
 		return err

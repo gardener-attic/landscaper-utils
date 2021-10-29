@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 REPO_ROOT                                      := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-VERSION                                        := $(shell cat $(REPO_ROOT)/VERSION)
+VERSION                                        := $(shell cat $(REPO_ROOT)/../VERSION)
 EFFECTIVE_VERSION                              := $(VERSION)-$(shell git rev-parse HEAD)
 REGISTRY                                       := eu.gcr.io/gardener-project/landscaper-utils
 MACHINE_IMAGES_IMAGE_REPOSITORY                := $(REGISTRY)/machine-images
@@ -23,11 +23,11 @@ revendor:
 
 .PHONY: format
 format:
-	@goimports -l -w -local=github.com/gardener/image-vector ./pkg ./cmd
+	@goimports -l -w -local=github.com/gardener/landscaper-utils/machineimages ./pkg ./cmd
 
 .PHONY: check
 check:
-	@$(REPO_ROOT)/hack/check.sh --golangci-lint-config=./.golangci.yaml $(REPO_ROOT)/pkg/... $(REPO_ROOT)/cmd/...
+	@$(REPO_ROOT)/hack/check.sh --golangci-lint-config=../.golangci.yaml $(REPO_ROOT)/pkg/... $(REPO_ROOT)/cmd/...
 
 .PHONY: test
 test:
@@ -43,16 +43,13 @@ install:
 .PHONY: docker-images
 docker-images:
 	@echo "Building docker images for version $(EFFECTIVE_VERSION)"
-	@docker build --build-arg EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) -t $(MACHINE_IMAGES_IMAGE_REPOSITORY):$(EFFECTIVE_VERSION) -f Dockerfile --target machine-images .
-	@docker build --build-arg EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) -t $(LANDSCAPER_UTILS_IMAGE_REPOSITORY):$(EFFECTIVE_VERSION) -f Dockerfile --target landscaper-utils .
+	@docker build --build-arg EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) -t $(MACHINE_IMAGES_IMAGE_REPOSITORY):$(EFFECTIVE_VERSION) -f Dockerfile --target machineimages .
 
 .PHONY: docker-push
 docker-push:
 	@echo "Pushing docker images for version $(EFFECTIVE_VERSION) to registry $(REGISTRY)"
 	@if ! docker images $(MACHINE_IMAGES_IMAGE_REPOSITORY) | awk '{ print $$2 }' | grep -q -F $(EFFECTIVE_VERSION); then echo "$(MACHINE_IMAGES_IMAGE_REPOSITORY) version $(EFFECTIVE_VERSION) is not yet built. Please run 'make docker-images'"; false; fi
-	@if ! docker images $(LANDSCAPER_UTILS_IMAGE_REPOSITORY) | awk '{ print $$2 }' | grep -q -F $(EFFECTIVE_VERSION); then echo "$(LANDSCAPER_UTILS_IMAGE_REPOSITORY) version $(EFFECTIVE_VERSION) is not yet built. Please run 'make docker-images'"; false; fi
 	@docker push $(MACHINE_IMAGES_IMAGE_REPOSITORY):$(EFFECTIVE_VERSION)
-	@docker push $(LANDSCAPER_UTILS_IMAGE_REPOSITORY):$(EFFECTIVE_VERSION)
 
 cnudie: export COMPONENT_NAME=$(COMP_NAME_MACHINE_IMAGES)
 .PHONY: cnudie
@@ -61,7 +58,6 @@ cnudie:
 
 .PHONY: create-installation
 create-installation:
-	@REGISTRY=$(REGISTRY) \
-	COMPONENT_NAME=$(COMP_NAME_MACHINE_IMAGES) \
+	@COMPONENT_NAME=$(COMP_NAME_MACHINE_IMAGES) \
 	EFFECTIVE_VERSION=$(EFFECTIVE_VERSION) \
 	./hack/create-installation.sh

@@ -1,12 +1,21 @@
+// SPDX-FileCopyrightText: 2021 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package machineimages
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"sort"
+
+	"github.com/go-logr/logr"
 )
 
 func ComputeMachineImages(
+	ctx context.Context,
+	log logr.Logger,
 	lssOsImages []MachineImage,
 	landscapeOsImages []MachineImage,
 	providerOsImages []MachineImage,
@@ -18,6 +27,8 @@ func ComputeMachineImages(
 	[]MachineImage,
 	error,
 ) {
+	log.Info("Computing machine images")
+
 	if len(includeFilters) == 0 {
 		includeFilters = append(includeFilters, OsImagesFilterKindAll)
 	}

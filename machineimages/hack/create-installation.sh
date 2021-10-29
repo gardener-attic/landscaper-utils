@@ -9,9 +9,10 @@ set -e
 SOURCE_PATH="$(dirname $0)/.."
 TMP_DIR="$(mktemp -d)"
 INSTALLATION_PATH="${TMP_DIR}/installation.yaml"
+COMPONENT_CONTEXT="eu.gcr.io/sap-se-gcr-k8s-private/cnudie/gardener/development"
 
-echo "Generation an installation"
-echo "Registry:          ${REGISTRY}"
+echo "Generating installation"
+echo "Component context: ${COMPONENT_CONTEXT}"
 echo "Component name:    ${COMPONENT_NAME}"
 echo "Effective version: ${EFFECTIVE_VERSION}"
 
@@ -20,12 +21,13 @@ apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
   name: machine-images
+  namespace: test
 spec:
   componentDescriptor:
     ref:
       repositoryContext:
         type: ociRegistry
-        baseUrl: ${REGISTRY}
+        baseUrl: ${COMPONENT_CONTEXT}
       componentName: github.com/gardener/landscaper-utils/${COMPONENT_NAME}
       version: ${EFFECTIVE_VERSION}
 

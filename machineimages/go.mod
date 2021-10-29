@@ -1,4 +1,4 @@
-module github.com/gardener/landscaper-utils
+module github.com/gardener/landscaper-utils/machineimages
 
 go 1.16
 
