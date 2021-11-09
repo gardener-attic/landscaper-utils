@@ -10,6 +10,7 @@ landscaper-utils:
       version:
         preprocess: 'inject-commit-hash'
         inject_effective_version: true
+    component_descriptor: ~
     steps:
       verify:
         image: 'golang:1.17'
@@ -23,8 +24,7 @@ landscaper-utils:
               triggering_policy: 'always'
               recipients:
               - committers
-              - codeowners
-        component_descriptor: ~
+              # - codeowners
     pull-request:
       traits:
         pull-request: ~
