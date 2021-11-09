@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-landscaper:
+landscaper-utils:
   template: 'default'
   base_definition:
     repo: ~
