@@ -151,7 +151,7 @@ func (o *Options) GetComponentDescriptor() (*cdv2.ComponentDescriptor, error) {
 func (o *Options) readComponentDescriptor() (*cdv2.ComponentDescriptor, error) {
 	o.Log.Info("Reading component descriptor", "component-descriptor-path", o.ComponentDescriptorPath)
 
-	data, err := ioutil.ReadFile(o.ImportsPath)
+	data, err := ioutil.ReadFile(o.ComponentDescriptorPath)
 	if err != nil {
 		return nil, err
 	}
