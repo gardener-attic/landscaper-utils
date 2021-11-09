@@ -18,7 +18,7 @@ cp ${BASE_DEFINITION_PATH} "${CA_PATH}/component-descriptor.yaml"
 
 printf "> Create Component Archive\n"
 
-if [[ -z "$RESOURCES_FILE_PATH" ]]; then
+if [ -z "$RESOURCES_FILE_PATH" ]; then
   component-cli ca "${CA_PATH}" "${CTF_PATH}" VERSION=${EFFECTIVE_VERSION}
 else
   component-cli ca "${CA_PATH}" "${CTF_PATH}" -r ${RESOURCES_FILE_PATH} VERSION=${EFFECTIVE_VERSION}
