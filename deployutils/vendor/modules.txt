@@ -1,9 +1,19 @@
+# github.com/containerd/containerd v1.5.5
+github.com/containerd/containerd/reference/docker
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
 # github.com/evanphx/json-patch v4.11.0+incompatible
 github.com/evanphx/json-patch
-# github.com/gardener/component-spec/bindings-go v0.0.41
+# github.com/gardener/component-cli v0.29.0
+## explicit
+github.com/gardener/component-cli/ociclient/oci
+# github.com/gardener/component-spec/bindings-go v0.0.53
+## explicit
+github.com/gardener/component-spec/bindings-go/apis
 github.com/gardener/component-spec/bindings-go/apis/v2
+github.com/gardener/component-spec/bindings-go/apis/v2/jsonscheme
+github.com/gardener/component-spec/bindings-go/apis/v2/validation
+github.com/gardener/component-spec/bindings-go/codec
 github.com/gardener/component-spec/bindings-go/utils/selector
 # github.com/gardener/landscaper/apis v0.15.1
 ## explicit
@@ -48,6 +58,11 @@ github.com/json-iterator/go
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
 github.com/modern-go/reflect2
+# github.com/opencontainers/go-digest v1.0.0
+github.com/opencontainers/go-digest
+# github.com/opencontainers/image-spec v1.0.1
+github.com/opencontainers/image-spec/specs-go
+github.com/opencontainers/image-spec/specs-go/v1
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
 # github.com/spf13/pflag v1.0.5
@@ -78,7 +93,7 @@ golang.org/x/net/http/httpguts
 golang.org/x/net/http2
 golang.org/x/net/http2/hpack
 golang.org/x/net/idna
-# golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
+# golang.org/x/oauth2 v0.0.0-20210402161424-2e8d93401602
 golang.org/x/oauth2
 golang.org/x/oauth2/internal
 # golang.org/x/sys v0.0.0-20210817190340-bfb29a6856f2
@@ -185,7 +200,6 @@ k8s.io/api/storage/v1
 k8s.io/api/storage/v1alpha1
 k8s.io/api/storage/v1beta1
 # k8s.io/apimachinery v0.22.3
-## explicit
 k8s.io/apimachinery/pkg/api/errors
 k8s.io/apimachinery/pkg/api/meta
 k8s.io/apimachinery/pkg/api/resource

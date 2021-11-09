@@ -3,6 +3,8 @@ module github.com/gardener/landscaper-utils/deployutils
 go 1.16
 
 require (
+	github.com/gardener/component-cli v0.29.0
+	github.com/gardener/component-spec/bindings-go v0.0.53
 	github.com/gardener/landscaper/apis v0.15.1
 	github.com/go-logr/logr v0.4.0
 	github.com/go-logr/zapr v0.4.0

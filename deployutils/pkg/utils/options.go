@@ -7,13 +7,18 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"github.com/gardener/landscaper-utils/deployutils/pkg/logger"
-	"github.com/go-logr/logr"
-	"github.com/spf13/pflag"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	"github.com/gardener/component-cli/ociclient/oci"
+	cdv2 "github.com/gardener/component-spec/bindings-go/apis/v2"
+	"github.com/gardener/component-spec/bindings-go/codec"
+	"github.com/go-logr/logr"
+	"github.com/spf13/pflag"
 	"sigs.k8s.io/yaml"
+
+	"github.com/gardener/landscaper-utils/deployutils/pkg/logger"
 )
 
 const (
@@ -137,4 +142,87 @@ func (o *Options) WriteExports(exports interface{}) error {
 	}
 
 	return ioutil.WriteFile(o.ExportsPath, b, os.ModePerm)
+}
+
+func (o *Options) GetComponentDescriptor() (*cdv2.ComponentDescriptor, error) {
+	return o.readComponentDescriptor()
+}
+
+func (o *Options) readComponentDescriptor() (*cdv2.ComponentDescriptor, error) {
+	o.Log.Info("Reading component descriptor", "component-descriptor-path", o.ComponentDescriptorPath)
+
+	data, err := ioutil.ReadFile(o.ImportsPath)
+	if err != nil {
+		return nil, err
+	}
+
+	cd := &cdv2.ComponentDescriptor{}
+	if err := codec.Decode(data, cd); err != nil {
+		return nil, err
+	}
+
+	return cd, nil
+}
+
+// getResourceByName returns the entry with the given name from the "resources" section of the component descriptor.
+// Returns an error if there is no such entry or more than one.
+func (o *Options) getResourceByName(name string) (*cdv2.Resource, error) {
+	cd, err := o.readComponentDescriptor()
+	if err != nil {
+		return nil, err
+	}
+
+	nameSelector := cdv2.NewNameSelector(name)
+	resources, err := cd.GetResourcesBySelector(nameSelector)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(resources) == 0 {
+		return nil, fmt.Errorf("no resource with name %q found", name)
+	}
+
+	if len(resources) > 1 {
+		return nil, fmt.Errorf("more than one resource with name %q found", name)
+	}
+
+	return &resources[0], nil
+}
+
+func (o *Options) GetOCIImageReference(resourceName string) (string, error) {
+	resource, err := o.getResourceByName(resourceName)
+	if err != nil {
+		return "", err
+	}
+
+	access := &cdv2.OCIRegistryAccess{}
+	if err := resource.Access.DecodeInto(access); err != nil {
+		return "", err
+	}
+
+	return access.ImageReference, nil
+}
+
+func (o *Options) GetOCIRepositoryAndTag(resourceName string) (repository, tag string, err error) {
+	imageReference, err := o.GetOCIImageReference(resourceName)
+	if err != nil {
+		return "", "", err
+	}
+
+	refSpec, err := oci.ParseRef(imageReference)
+	if err != nil {
+		return "", "", err
+	}
+
+	repository = refSpec.Name()
+
+	if refSpec.Tag != nil {
+		tag = *refSpec.Tag
+	} else if refSpec.Digest != nil {
+		tag = refSpec.Digest.String()
+	} else {
+		return "", "", fmt.Errorf("Image reference of resource %q has neither tag, nor digest. ", resourceName)
+	}
+
+	return repository, tag, nil
 }
