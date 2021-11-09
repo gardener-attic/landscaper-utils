@@ -4,8 +4,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-set -o errexit
-set -o pipefail
+set -e
 
 SOURCE_PATH="$(dirname $0)/.."
 COMMIT_SHA="$(git --git-dir ${SOURCE_PATH}/.git rev-parse HEAD)"
