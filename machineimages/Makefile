@@ -27,7 +27,7 @@ format:
 
 .PHONY: check
 check:
-	@$(REPO_ROOT)/hack/check.sh --golangci-lint-config=../.golangci.yaml $(REPO_ROOT)/pkg/... $(REPO_ROOT)/cmd/...
+	@$(REPO_ROOT)/../hack/check.sh --golangci-lint-config=../.golangci.yaml $(REPO_ROOT)/pkg/... $(REPO_ROOT)/cmd/...
 
 .PHONY: test
 test:
