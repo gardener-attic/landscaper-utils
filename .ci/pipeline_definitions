@@ -24,6 +24,7 @@ landscaper-utils:
               recipients:
               - committers
               - codeowners
+        component_descriptor: ~
     pull-request:
       traits:
         pull-request: ~
