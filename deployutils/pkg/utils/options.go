@@ -167,7 +167,12 @@ func (o *Options) readComponentDescriptor() (*cdv2.ComponentDescriptor, error) {
 	}
 
 	if len(cd.Components) != 1 {
-		return nil, fmt.Errorf("found %s component descriptors, expected one ", len(cd.Components))
+		componentNames := []string{}
+		for _, c := range cd.Components {
+			componentNames = append(componentNames, c.Name)
+		}
+
+		return nil, fmt.Errorf("found %s component descriptors, expected one; %s ", len(cd.Components), componentNames)
 	}
 
 	return &cd.Components[0], nil
