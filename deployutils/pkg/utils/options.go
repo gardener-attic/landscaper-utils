@@ -158,7 +158,12 @@ func (o *Options) readComponentDescriptor() (*cdv2.ComponentDescriptor, error) {
 
 	cd := &cdv2.ComponentDescriptor{}
 	if err := codec.Decode(data, cd); err != nil {
-		return nil, fmt.Errorf("Failed to decode component descriptor - error: %w - component descriptor: %s", err, string(data))
+		cdStart := string(data)
+		if len(data) > 100 {
+			cdStart = cdStart[:100]
+		}
+
+		return nil, fmt.Errorf("Failed to decode component descriptor - error: %w - component descriptor: %s", err, cdStart)
 	}
 
 	return cd, nil
