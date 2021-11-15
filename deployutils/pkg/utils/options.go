@@ -149,12 +149,12 @@ func (o *Options) readComponentDescriptors() (*cdv2.ComponentDescriptorList, err
 
 	data, err := ioutil.ReadFile(o.ComponentDescriptorPath)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error reading component descriptor file: %w ", err)
 	}
 
 	cdList := &cdv2.ComponentDescriptorList{}
 	if err := codec.Decode(data, cdList); err != nil {
-		return nil, fmt.Errorf("error decoding component descriptor list - error: %w ", err)
+		return nil, fmt.Errorf("error decoding component descriptor list: %w ", err)
 	}
 
 	return cdList, nil
@@ -183,15 +183,15 @@ func (o *Options) GetResourceByName(cd *cdv2.ComponentDescriptor, resourceName s
 	nameSelector := cdv2.NewNameSelector(resourceName)
 	resources, err := cd.GetResourcesBySelector(nameSelector)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error selecting resources with name %s: %w", resourceName, err)
 	}
 
 	if len(resources) == 0 {
-		return nil, fmt.Errorf("no resource with name %q found", resourceName)
+		return nil, fmt.Errorf("no resource with name %s found", resourceName)
 	}
 
 	if len(resources) > 1 {
-		return nil, fmt.Errorf("more than one resource with name %q found", resourceName)
+		return nil, fmt.Errorf("more than one resource with name %s found", resourceName)
 	}
 
 	return &resources[0], nil
@@ -207,7 +207,7 @@ func (o *Options) GetOCIImageReference(cd *cdv2.ComponentDescriptor, resourceNam
 
 	access := &cdv2.OCIRegistryAccess{}
 	if err := resource.Access.DecodeInto(access); err != nil {
-		return "", err
+		return "", fmt.Errorf("error decoding acceess data of resource %s: %w ", resourceName, err)
 	}
 
 	return access.ImageReference, nil
@@ -223,7 +223,7 @@ func (o *Options) GetOCIRepositoryAndTag(cd *cdv2.ComponentDescriptor, resourceN
 
 	refSpec, err := oci.ParseRef(imageReference)
 	if err != nil {
-		return "", "", err
+		return "", "", fmt.Errorf("error parsing oci image reference of resource %s: %w ", resourceName, err)
 	}
 
 	repository = refSpec.Name()
@@ -233,7 +233,7 @@ func (o *Options) GetOCIRepositoryAndTag(cd *cdv2.ComponentDescriptor, resourceN
 	} else if refSpec.Digest != nil {
 		tag = refSpec.Digest.String()
 	} else {
-		return "", "", fmt.Errorf("Image reference of resource %q has neither tag, nor digest. ", resourceName)
+		return "", "", fmt.Errorf("image reference of resource %s has neither tag, nor digest. ", resourceName)
 	}
 
 	return repository, tag, nil
