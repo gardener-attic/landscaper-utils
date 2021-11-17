@@ -144,7 +144,8 @@ func (o *Options) WriteExports(exports interface{}) error {
 	return ioutil.WriteFile(o.ExportsPath, b, os.ModePerm)
 }
 
-func (o *Options) readComponentDescriptors() (*cdv2.ComponentDescriptorList, error) {
+// GetComponentDescriptors returns the ComponentDescriptorList.
+func (o *Options) GetComponentDescriptors() (*cdv2.ComponentDescriptorList, error) {
 	o.Log.Info("Reading component descriptor", "component-descriptor-path", o.ComponentDescriptorPath)
 
 	data, err := ioutil.ReadFile(o.ComponentDescriptorPath)
@@ -160,9 +161,10 @@ func (o *Options) readComponentDescriptors() (*cdv2.ComponentDescriptorList, err
 	return cdList, nil
 }
 
-// GetComponentDescriptorsByName returns the component descriptors with the given name.
-func (o *Options) GetComponentDescriptorsByName(componentName string) ([]cdv2.ComponentDescriptor, error) {
-	cdList, err := o.readComponentDescriptors()
+// GetComponentDescriptorByName returns the component descriptor with the given name.
+// Returns an error if there is no such component descriptor, or more than one.
+func (o *Options) GetComponentDescriptorByName(componentName string) (*cdv2.ComponentDescriptor, error) {
+	cdList, err := o.GetComponentDescriptors()
 	if err != nil {
 		return nil, err
 	}
@@ -174,11 +176,19 @@ func (o *Options) GetComponentDescriptorsByName(componentName string) ([]cdv2.Co
 		}
 	}
 
-	return cds, nil
+	if len(cds) == 0 {
+		return nil, fmt.Errorf("no component descriptor with name %s found", componentName)
+	}
+
+	if len(cds) > 1 {
+		return nil, fmt.Errorf("more than one component descriptor with name %s found", componentName)
+	}
+
+	return &cds[0], nil
 }
 
 // GetResourceByName returns the entry with the given name from the "resources" section of the component descriptor.
-// Returns an error if there is no such entry or more than one.
+// Returns an error if there is no such entry, or more than one.
 func (o *Options) GetResourceByName(cd *cdv2.ComponentDescriptor, resourceName string) (*cdv2.Resource, error) {
 	nameSelector := cdv2.NewNameSelector(resourceName)
 	resources, err := cd.GetResourcesBySelector(nameSelector)
@@ -197,9 +207,9 @@ func (o *Options) GetResourceByName(cd *cdv2.ComponentDescriptor, resourceName s
 	return &resources[0], nil
 }
 
-// GetOCIImageReference returns the OCI image reference of the resource with the given name
+// GetResourceOCIImageReference returns the OCI image reference of the resource with the given name
 // from the given component descriptor.
-func (o *Options) GetOCIImageReference(cd *cdv2.ComponentDescriptor, resourceName string) (string, error) {
+func (o *Options) GetResourceOCIImageReference(cd *cdv2.ComponentDescriptor, resourceName string) (string, error) {
 	resource, err := o.GetResourceByName(cd, resourceName)
 	if err != nil {
 		return "", err
@@ -213,10 +223,10 @@ func (o *Options) GetOCIImageReference(cd *cdv2.ComponentDescriptor, resourceNam
 	return access.ImageReference, nil
 }
 
-// GetOCIRepositoryAndTag returns the repository and tag of the resource with the given name
+// GetResourceOCIRepositoryAndTag returns the repository and tag of the resource with the given name
 // from the given component descriptor.
-func (o *Options) GetOCIRepositoryAndTag(cd *cdv2.ComponentDescriptor, resourceName string) (repository, tag string, err error) {
-	imageReference, err := o.GetOCIImageReference(cd, resourceName)
+func (o *Options) GetResourceOCIRepositoryAndTag(cd *cdv2.ComponentDescriptor, resourceName string) (repository, tag string, err error) {
+	imageReference, err := o.GetResourceOCIImageReference(cd, resourceName)
 	if err != nil {
 		return "", "", err
 	}
